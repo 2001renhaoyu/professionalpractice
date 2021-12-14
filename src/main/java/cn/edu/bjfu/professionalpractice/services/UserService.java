@@ -8,10 +8,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 @Component
 public class UserService implements UserDetailsService {
     // 注入UserMapper:
-    @Autowired
+    @Resource
     UserMapper userMapper;
 
     public User findOneById(String id) {
@@ -37,6 +39,7 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new RuntimeException("User not found by id.");
         }
+
         return user;
     }
 }

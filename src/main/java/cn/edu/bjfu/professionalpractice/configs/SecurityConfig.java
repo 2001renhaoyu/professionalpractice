@@ -34,12 +34,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(UserSerice());
+        auth.userDetailsService(UserSerice()).passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        http
+                .authorizeRequests()
+                .antMatchers("/","/index","/error").permitAll()
+                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .and()
+                .formLogin().loginPage("/login")
+                .usernameParameter("username").passwordParameter("password")
+                .and()
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/login");
     }
 
 }

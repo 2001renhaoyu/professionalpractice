@@ -8,13 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.Resource;
+
 /**
  * 登陆控制
  * @author renhaoyu
  */
 @Controller
 public class MainController {
-    @Autowired
+    @Resource
     private UserService userService;
 
     @GetMapping(value = {"","/login"})
@@ -22,10 +24,10 @@ public class MainController {
         return "login";
     }
 
-    @PostMapping("/signIn")
-    public String signIn(@RequestParam("username") String username, @RequestParam("password") String password){
-        User user = userService.signIn(username,password);
-
-        return "login";
-    }
+//    @PostMapping("/signIn")
+//    public String signIn(@RequestParam("username") String username, @RequestParam("password") String password){
+//        User user = userService.signIn(username,password);
+//
+//        return "login";
+//    }
 }

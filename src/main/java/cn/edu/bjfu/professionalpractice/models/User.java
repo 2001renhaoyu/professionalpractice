@@ -1,10 +1,13 @@
 package cn.edu.bjfu.professionalpractice.models;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class User implements Serializable , UserDetails {
     String u_id;
@@ -37,11 +40,15 @@ public class User implements Serializable , UserDetails {
 
     /**
      * SpringSecurity权限相关方法
+     * getAuthorities利用用户类型（string）构造SimpleGrantedAuthority
+     * 并加入GrantedAuthority权限集
+     * 在专业实践平台，每个用户的权限集只有一种权限（admin、student、teacher中的一个）
      */
-    private Collection<? extends GrantedAuthority> authorities;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        List<GrantedAuthority> auths=new ArrayList<>();
+        auths.add(new SimpleGrantedAuthority(getU_type()));
+        return auths;
     }
 
     @Override
