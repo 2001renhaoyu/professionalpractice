@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;database=professionalPractice
+    username: sa
+    password: 123456
+  thymeleaf:
+    prefix: classpath:/templates/
+    encoding: UTF-8
+    cache: false
+    mode: HTML5
+  web:
+    resources:
+      static-locations: classpath:/
