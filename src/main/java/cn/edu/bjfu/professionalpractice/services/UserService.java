@@ -1,8 +1,7 @@
 package cn.edu.bjfu.professionalpractice.services;
 
-import cn.edu.bjfu.professionalpractice.mapper.UserMapper;
+import cn.edu.bjfu.professionalpractice.mappers.UserMapper;
 import cn.edu.bjfu.professionalpractice.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
