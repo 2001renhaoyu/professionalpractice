@@ -1,5 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.bjfu.professionalpractice.mapper.CaseMapper">
-
+    <resultMap id="caseList" type="cn.edu.bjfu.professionalpractice.entity.CourseCase">
+        <id column="case_id" property="case_id" />
+        <result column="case_name" property="case_name" />
+        <result column="c_id" property="c_id" />
+        <result column="case_isDel" property="case_isDel" />
+    </resultMap>
+    <update id="updateCase">
+        update CourseCase
+        <trim prefix="set" suffixOverrides=",">
+            <if test="case_name!=null">case_name = #{case_name},</if>
+            <if test="c_id!=null">c_id = #{c_id},</if>
+            <if test="case_isDel!=null">case_isDel = #{case_isDel},</if>
+        </trim>
+        where case_id = #{case_id}
+    </update>
+    <select id="queryCase" resultMap="caseList">
+        <choose>
+            <when test="c_id == null">
+                SELECT * FROM CourseCase
+                <trim prefix="WHERE" prefixOverrides="AND |OR ">
+                    <if test="case_id != null">
+                        <if test="case_id != ''">
+                            case_id = #{case_id}
+                        </if>
+                    </if>
+                    <if test="c_id != ''">
+                        AND CourseCase.c_id IN (SELECT Course.c_id FROM Course WHERE Course.t_id = #{t_id})
+                    </if>
+                    <if test="case_name != null">
+                        AND case_name like #{case_name}
+                    </if>
+                </trim>
+                ORDER BY case_id
+            </when>
+            <otherwise>
+                SELECT * FROM CourseCase
+                <trim prefix="WHERE" prefixOverrides="AND |OR ">
+                    <if test="case_id != null">
+                        <if test="case_id != ''">
+                            case_id = #{case_id}
+                        </if>
+                    </if>
+                    <if test="c_id != ''">
+                        AND c_id = #{c_id}
+                    </if>
+                    <if test="case_name != null">
+                        AND case_name like #{case_name}
+                    </if>
+                </trim>
+                ORDER BY case_id
+            </otherwise>
+        </choose>
+    </select>
 </mapper>

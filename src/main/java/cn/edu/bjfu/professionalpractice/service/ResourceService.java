@@ -2,6 +2,9 @@ package cn.edu.bjfu.professionalpractice.service;
 
 import cn.edu.bjfu.professionalpractice.entity.Resource;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ResourceService extends IService<Resource> {
 
+    int upload(MultipartFile multipartFile, String case_id);
+
+    List<Resource> queryResource(String case_id);
+
+    int deleteResource(String r_id);
 }

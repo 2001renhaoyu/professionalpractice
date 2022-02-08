@@ -21,16 +21,16 @@ public class Resource implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String rId;
+    private String r_id;
 
-    private String rName;
+    private String r_name;
 
-    private String rType;
+    private String r_type;
 
-    private String caseId;
+    private String case_id;
 
     @TableField("r_physicalLocation")
-    private String rPhysicallocation;
+    private String r_physicalLocation;
 
 
 }

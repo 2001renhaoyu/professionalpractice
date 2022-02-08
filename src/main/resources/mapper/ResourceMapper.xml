@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.bjfu.professionalpractice.mapper.ResourceMapper">
-
+    <resultMap id="resourceList" type="cn.edu.bjfu.professionalpractice.entity.Resource">
+        <id column="r_id" property="r_id" />
+        <result column="r_name" property="r_name" />
+        <result column="r_physicalLocation" property="r_physicalLocation" />
+        <result column="r_type" property="r_type" />
+        <result column="case_id" property="case_id" />
+    </resultMap>
+    <select id="queryResource" resultMap="resourceList">
+        SELECT * FROM Resource WHERE case_id = #{case_id}
+    </select>
 </mapper>

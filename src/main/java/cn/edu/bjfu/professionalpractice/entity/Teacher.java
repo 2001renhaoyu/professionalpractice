@@ -20,11 +20,11 @@ public class Teacher implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String tId;
+    private String t_id;
 
-    private String tName;
+    private String t_name;
 
-    private String tPhone;
+    private String t_phone;
 
 
 }

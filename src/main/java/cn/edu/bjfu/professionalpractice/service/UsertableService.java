@@ -12,5 +12,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-12-21
  */
 public interface UsertableService extends IService<Usertable> {
+    Usertable login(String username,String password);
+
+    int addUser(String u_id, String u_type);
 
 }

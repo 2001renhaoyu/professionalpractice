@@ -2,4 +2,95 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.bjfu.professionalpractice.mapper.TaskMapper">
 
+    <resultMap id="taskList" type="cn.edu.bjfu.professionalpractice.entity.Task">
+        <id column="t_id" property="t_id" />
+        <result column="t_name" property="t_name" />
+        <result column="t_content" property="t_content" />
+        <result column="t_type" property="t_type" />
+        <result column="s_id" property="s_id" />
+        <result column="t_startTime" property="t_startTime" />
+        <result column="t_state" property="t_state" />
+        <result column="t_endModifyTime" property="t_endModifyTime" />
+        <result column="t_score" property="t_score" />
+        <result column="t_evaluation" property="t_evaluation" />
+        <result column="t_evaluationTime" property="t_evaluationTime" />
+
+    </resultMap>
+    <update id="updateTask_1">
+        update Task
+        <trim prefix="set" suffixOverrides=",">
+            <if test="t_score!=null">t_score = #{t_score},</if>
+            <if test="t_evaluation!=null">t_evaluation = #{t_evaluation},</if>
+            <if test="t_evaluationTime!=null">t_evaluationTime = #{t_evaluationTime},</if>
+        </trim>
+        where t_id = #{t_id}
+    </update>
+    <update id="updateTask_2">
+        update Task
+        <trim prefix="set" suffixOverrides=",">
+            <if test="t_name!=null">t_name = #{t_name},</if>
+            <if test="t_type!=null">t_type = #{t_type},</if>
+            <if test="t_state!=null">t_state = #{t_state},</if>
+            <if test="t_endModifyTime!=null">t_endModifyTime = #{t_endModifyTime},</if>
+        </trim>
+        where t_id = #{t_id} and s_id = #{s_id}
+    </update>
+    <select id="queryTask" resultMap="taskList">
+        <choose>
+            <when test="s_id == null">
+                SELECT * FROM Task
+                <trim prefix="WHERE" prefixOverrides="AND |OR ">
+                    <if test="t_id != null">
+                        <if test="t_id != ''">
+                            t_id = #{t_id}
+                        </if>
+                    </if>
+                    <if test="s_id != ''">
+                        AND Task.s_id IN (SELECT s_id FROM SG WHERE g_id = #{g_id})
+                    </if>
+                    <if test="t_name != null">
+                        AND t_name like #{t_name}
+                    </if>
+                    <if test="t_type != null">
+                        <if test="t_type != ''">
+                            AND t_type = #{t_type}
+                        </if>
+                    </if>
+                    <if test="t_state != null">
+                        <if test="t_state != ''">
+                            AND t_state = #{t_state}
+                        </if>
+                    </if>
+                </trim>
+                ORDER BY t_id
+            </when>
+            <otherwise>
+                SELECT * FROM Task
+                <trim prefix="WHERE" prefixOverrides="AND |OR ">
+                    <if test="t_id != null">
+                        <if test="t_id != ''">
+                            t_id = #{t_id}
+                        </if>
+                    </if>
+                    <if test="s_id != ''">
+                        AND s_id = #{s_id}
+                    </if>
+                    <if test="t_name != null">
+                        AND t_name like #{t_name}
+                    </if>
+                    <if test="t_type != null">
+                        <if test="t_type != ''">
+                            AND t_type = #{t_type}
+                        </if>
+                    </if>
+                    <if test="t_state != null">
+                        <if test="t_state != ''">
+                            AND t_state = #{t_state}
+                        </if>
+                    </if>
+                </trim>
+                ORDER BY t_id
+            </otherwise>
+        </choose>
+    </select>
 </mapper>

@@ -1,7 +1,6 @@
 package cn.edu.bjfu.professionalpractice.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,19 +15,18 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("Case")
-public class Case implements Serializable {
+@TableName("StudentGroup")
+public class StudentGroup implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String caseId;
+    private String g_id;
 
-    private String caseName;
+    private String g_name;
 
-    private String cId;
+    private String s_leader_id;
 
-    @TableField("case_isDel")
-    private String caseIsdel;
+    private String p_id;
 
 
 }

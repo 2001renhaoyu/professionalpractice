@@ -21,12 +21,12 @@ public class Sc implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String sId;
+    private String s_id;
 
-    private String cId;
+    private String c_id;
 
     @TableField("sc_isDel")
-    private String scIsdel;
+    private String sc_isdel;
 
 
 }

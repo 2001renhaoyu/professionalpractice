@@ -2,4 +2,129 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.bjfu.professionalpractice.mapper.StudentMapper">
 
+    <resultMap id="studentList" type="cn.edu.bjfu.professionalpractice.entity.Student">
+        <id column="s_id" property="s_id" />
+        <result column="s_name" property="s_name" />
+        <result column="s_sex" property="s_sex" />
+        <result column="s_phone" property="s_phone" />
+        <result column="s_major" property="s_major" />
+        <result column="s_startTime" property="s_startTime" />
+        <result column="s_class" property="s_class" />
+        <result column="s_isDel" property="s_isDel" />
+    </resultMap>
+    <update id="deleteStudent">
+        update Student
+        SET s_isDel = '1'
+        WHERE s_id = #{s_id}
+    </update>
+
+    <update id="updateStudent">
+        update Student
+        <trim prefix="set" suffixOverrides=",">
+            <if test="s_name!=null">s_name = #{s_name},</if>
+            <if test="s_sex!=null">s_sex = #{s_sex},</if>
+            <if test="s_class!=null">s_class = #{s_class},</if>
+            <if test="s_major!=null">s_major = #{s_major},</if>
+            <if test="s_phone!=null">s_phone = #{s_phone},</if>
+        </trim>
+        where s_id = #{s_id}
+    </update>
+
+    <select id="queryStudent" resultMap="studentList">
+        <choose>
+            <when test="g_id == null">
+                SELECT Student.s_id,s_name,s_sex,s_phone,s_major,s_startTime,s_class,s_isDel
+                FROM Student left join SC S on Student.s_id = S.s_id
+                <trim prefix="WHERE" prefixOverrides="AND |OR ">
+                    <if test="c_id != null">
+                        <if test="c_id != ''">
+                            c_id = #{c_id}
+                        </if>
+                    </if>
+                    <if test="s_id != null">
+                        <if test="s_id != ''">
+                            Student.s_id = #{s_id}
+                        </if>
+                    </if>
+                    <if test="s_sex != null">
+                        <if test="s_sex != ''">
+                            AND s_sex = #{s_sex}
+                        </if>
+                    </if>
+                    <if test="s_isDel != null">
+                        <if test="s_isDel != ''">
+                            AND s_isDel = #{s_isDel}
+                        </if>
+                    </if>
+                    <if test="s_name != null">
+                        <if test="s_name != null ">
+                            AND s_name like #{s_name}
+                        </if>
+                    </if>
+                    <if test="s_phone != null">
+                        <if test="s_phone != null ">
+                            AND s_phone like #{s_phone}
+                        </if>
+                    </if>
+                    <if test="s_class != null">
+                        <if test="s_class != null ">
+                            AND s_class like #{s_class}
+                        </if>
+                    </if>
+                    <if test="s_major != null">
+                        <if test="s_major != null ">
+                            AND s_major like #{s_major}
+                        </if>
+                    </if>
+
+                </trim>
+                ORDER BY Student.s_id
+            </when>
+            <otherwise>
+                SELECT s_id,s_name,s_sex,s_phone,s_major,s_startTime,s_class,s_isDel
+                FROM Student
+                <trim prefix="WHERE" prefixOverrides="AND |OR ">
+                    s_id in
+                    (SELECT s_id FROM SG WHERE g_id = #{g_id})
+                    <if test="s_id != null">
+                        <if test="s_id != ''">
+                            AND Student.s_id = #{s_id}
+                        </if>
+                    </if>
+                    <if test="s_sex != null">
+                        <if test="s_sex != ''">
+                            AND s_sex = #{s_sex}
+                        </if>
+                    </if>
+                    <if test="s_isDel != null">
+                        <if test="s_isDel != ''">
+                            AND s_isDel = #{s_isDel}
+                        </if>
+                    </if>
+                    <if test="s_name != null">
+                        <if test="s_name != null ">
+                            AND s_name like #{s_name}
+                        </if>
+                    </if>
+                    <if test="s_phone != null">
+                        <if test="s_phone != null ">
+                            AND s_phone like #{s_phone}
+                        </if>
+                    </if>
+                    <if test="s_class != null">
+                        <if test="s_class != null ">
+                            AND s_class like #{s_class}
+                        </if>
+                    </if>
+                    <if test="s_major != null">
+                        <if test="s_major != null ">
+                            AND s_major like #{s_major}
+                        </if>
+                    </if>
+                </trim>
+                ORDER BY Student.s_id
+            </otherwise>
+        </choose>
+    </select>
+
 </mapper>

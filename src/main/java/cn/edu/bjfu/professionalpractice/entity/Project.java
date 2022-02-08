@@ -21,18 +21,18 @@ public class Project implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String pId;
+    private String p_id;
 
-    private String pName;
+    private String p_name;
 
-    private String pContent;
+    private String p_content;
 
     @TableField("p_numPeople")
-    private Integer pNumpeople;
+    private Integer p_numPeople;
 
-    private String pInstructions;
+    private String p_instructions;
 
-    private String cId;
+    private String c_id;
 
 
 }

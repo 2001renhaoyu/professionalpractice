@@ -2,6 +2,9 @@ package cn.edu.bjfu.professionalpractice.service;
 
 import cn.edu.bjfu.professionalpractice.entity.Attachment;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface AttachmentService extends IService<Attachment> {
 
+    List<Attachment> queryAttachment(String t_id);
+
+    int upload(MultipartFile file, String t_id);
 }

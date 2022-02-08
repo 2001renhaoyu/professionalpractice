@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.bjfu.professionalpractice.mapper.AttachmentMapper">
-
+    <resultMap id="attachmentList" type="cn.edu.bjfu.professionalpractice.entity.Attachment">
+        <id column="a_id" property="a_id" />
+        <result column="t_id" property="t_id" />
+        <result column="a_physicalLocation" property="a_physicalLocation" />
+        <result column="a_uptime" property="a_uptime" />
+    </resultMap>
+    <select id="queryAttachment" resultMap="attachmentList">
+        SELECT * FROM Attachment WHERE t_id = #{t_id}
+    </select>
 </mapper>

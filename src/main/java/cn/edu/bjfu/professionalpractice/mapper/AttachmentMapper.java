@@ -2,6 +2,9 @@ package cn.edu.bjfu.professionalpractice.mapper;
 
 import cn.edu.bjfu.professionalpractice.entity.Attachment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * <p>
@@ -11,6 +14,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author renhaoyu
  * @since 2021-12-21
  */
+@Repository
 public interface AttachmentMapper extends BaseMapper<Attachment> {
 
+    List<Attachment> queryAttachment(String t_id);
 }

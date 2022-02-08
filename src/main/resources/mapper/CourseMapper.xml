@@ -2,4 +2,72 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.bjfu.professionalpractice.mapper.CourseMapper">
 
+    <resultMap id="courseList" type="cn.edu.bjfu.professionalpractice.entity.Course">
+        <id column="c_id" property="c_id" />
+        <result column="c_name" property="c_name" />
+        <result column="c_startTime" property="c_startTime" />
+        <result column="c_isArchive" property="c_isArchive" />
+        <result column="t_id" property="t_id" />
+    </resultMap>
+
+    <update id="updateCourse">
+        update Course
+        <trim prefix="set" suffixOverrides=",">
+            <if test="c_name!=null">c_name = #{c_name},</if>
+            <if test="c_startTime!=null">c_startTime = #{c_startTime},</if>
+            <if test="t_id!=null">t_id = #{t_id},</if>
+            <if test="c_isArchive!=null">c_isArchive = #{c_isArchive},</if>
+        </trim>
+        where c_id = #{c_id}
+    </update>
+
+    <select id="queryCourse" resultMap="courseList">
+        <choose>
+            <when test="s_id == null">
+                SELECT * FROM Course
+                <trim prefix="WHERE" prefixOverrides="AND |OR ">
+                    <if test="c_id != null">
+                        <if test="c_id != ''">
+                            c_id = #{c_id}
+                        </if>
+                    </if>
+                    <if test="c_name != null">
+                        AND c_name like #{c_name}
+                    </if>
+                    <if test="c_isArchive != null">
+                        <if test="c_isArchive != ''">
+                            AND c_isArchive = #{c_isArchive}
+                        </if>
+                    </if>
+                    <if test="t_id != null">
+                        AND t_id = #{t_id}
+                    </if>
+                </trim>
+                ORDER BY c_id
+            </when>
+            <otherwise>
+                SELECT * FROM Course
+                <trim prefix="WHERE" prefixOverrides="AND |OR ">
+                    <if test="c_id != null">
+                        <if test="c_id != ''">
+                            c_id = #{c_id}
+                        </if>
+                    </if>
+                    <if test="c_name != null">
+                        AND c_name like #{c_name}
+                    </if>
+                    <if test="c_isArchive != null">
+                        <if test="c_isArchive != ''">
+                            AND c_isArchive = #{c_isArchive}
+                        </if>
+                    </if>
+                    <if test="s_id != ''">
+                        AND c_id in (SELECT c_id FROM SC WHERE s_id = #{s_id})
+                    </if>
+                </trim>
+                ORDER BY c_id
+            </otherwise>
+        </choose>
+
+    </select>
 </mapper>

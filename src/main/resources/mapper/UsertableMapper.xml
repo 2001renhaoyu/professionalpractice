@@ -2,4 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.bjfu.professionalpractice.mapper.UsertableMapper">
 
+    <select id="login" resultType="cn.edu.bjfu.professionalpractice.entity.Usertable">
+        SELECT DISTINCT
+            userTable.*
+        FROM
+            UserTable userTable
+        WHERE
+            userTable.u_id = #{username} AND userTable.u_password = #{password}
+    </select>
+
+    <insert id="addUser">
+        insert into UserTable(u_id, u_password,u_type) values(#{u_id}, '123', #{u_type})
+
+    </insert>
+
 </mapper>

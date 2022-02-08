@@ -22,17 +22,17 @@ public class Course implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String cId;
+    private String c_id;
 
-    private String cName;
+    private String c_name;
 
     @TableField("c_startTime")
-    private LocalDateTime cStarttime;
+    private LocalDateTime c_startTime;
 
-    private String tId;
+    private String t_id;
 
     @TableField("c_isArchive")
-    private String cIsarchive;
+    private String c_isArchive;
 
 
 }

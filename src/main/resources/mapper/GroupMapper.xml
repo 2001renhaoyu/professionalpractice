@@ -2,4 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.bjfu.professionalpractice.mapper.GroupMapper">
 
+    <resultMap id="groupList" type="cn.edu.bjfu.professionalpractice.entity.StudentGroup">
+        <id column="g_id" property="g_id" />
+        <result column="g_name" property="g_name" />
+        <result column="s_leader_id" property="s_leader_id" />
+        <result column="p_id" property="p_id" />
+    </resultMap>
+    <insert id="addGroup">
+        INSERT INTO StudentGroup (g_id, g_name, s_leader_id) VALUES (#{g_id},#{g_name},#{s_leader_id})
+    </insert>
+    <insert id="joinGroup">
+        INSERT INTO SG (g_id, s_id, sg_isDel) VALUES (#{g_id},#{s_id},0)
+
+    </insert>
+    <update id="updateGroup">
+        update StudentGroup
+        <trim prefix="set" suffixOverrides=",">
+            <if test="g_name!=null">g_name = #{g_name},</if>
+            <if test="s_leader_id!=null"> s_leader_id= #{s_leader_id},</if>
+        </trim>
+        where g_id = #{g_id}
+    </update>
+
+    <select id="queryGroup" resultMap="groupList">
+        <choose>
+            <when test="c_id == null">
+                <choose>
+                    <when test="s_id == null">
+                        SELECT * FROM StudentGroup
+                        WHERE s_leader_id IN
+                        (SELECT s_id FROM SC WHERE c_id IN
+                        (SELECT c_id FROM Course WHERE t_id = #{t_id}))
+                    </when>
+                    <otherwise>
+                        SELECT * FROM StudentGroup
+                        WHERE g_id IN
+                        (SELECT g_id FROM SG WHERE s_id = #{s_id})
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                SELECT * FROM StudentGroup
+                <trim prefix="WHERE" prefixOverrides="AND |OR ">
+                    s_leader_id IN (SELECT s_id FROM SC WHERE c_id = #{c_id})
+                    <if test="g_id != null">
+                        <if test="g_id != ''">
+                            AND g_id = #{g_id}
+                        </if>
+                    </if>
+                    <if test="g_name != null">
+                        AND g_name like #{g_name}
+                    </if>
+                    <if test="s_leader_id != null">
+                        <if test="s_leader_id != ''">
+                            AND s_leader_id = #{s_leader_id}
+                        </if>
+                    </if>
+                </trim>
+                ORDER BY g_id
+            </otherwise>
+        </choose>
+
+    </select>
 </mapper>

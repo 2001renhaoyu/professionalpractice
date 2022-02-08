@@ -2,4 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.bjfu.professionalpractice.mapper.TeacherMapper">
 
+    <resultMap id="teacherList" type="cn.edu.bjfu.professionalpractice.entity.Teacher">
+        <id column="t_id" property="t_id" />
+        <result column="t_name" property="t_name" />
+        <result column="t_phone" property="t_phone" />
+    </resultMap>
+    <update id="updateTeacher">
+        update Teacher
+        <trim prefix="set" suffixOverrides=",">
+            <if test="t_name!=null">t_name = #{t_name},</if>
+            <if test="t_phone!=null">t_phone = #{t_phone},</if>
+        </trim>
+        where t_id = #{t_id}
+    </update>
+
+    <select id="queryTeacher" resultMap="teacherList">
+        SELECT * FROM Teacher
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="t_id != null">
+                <if test="t_id != ''">
+                    t_id = #{t_id}
+                </if>
+            </if>
+            <if test="t_name != null ">
+                AND t_name like #{t_name}
+            </if>
+            <if test="t_phone != null ">
+                AND t_phone like #{t_phone}
+            </if>
+        </trim>
+        ORDER BY t_id
+    </select>
+
+    <insert id="addTeacher">
+        insert into Teacher(t_id, t_name,t_phone) values(#{t_id}, #{t_name}, #{t_phone})
+    </insert>
 </mapper>

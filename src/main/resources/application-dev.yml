@@ -3,6 +3,12 @@ spring:
     url: jdbc:sqlserver://localhost:1433;database=professionalPractice
     username: sa
     password: 123456
+  servlet:
+    multipart:
+      max-file-size: 10000MB
+      max-request-size: 10000MB
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

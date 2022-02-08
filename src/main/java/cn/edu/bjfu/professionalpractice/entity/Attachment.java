@@ -22,15 +22,15 @@ public class Attachment implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String aId;
+    private String a_id;
 
-    private String tId;
+    private String t_id;
 
     @TableField("a_physicalLocation")
-    private String aPhysicallocation;
+    private String a_physicalLocation;
 
     @TableField("a_upTime")
-    private LocalDateTime aUptime;
+    private LocalDateTime a_uptime;
 
 
 }

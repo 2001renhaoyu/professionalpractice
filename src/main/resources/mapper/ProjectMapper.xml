@@ -2,4 +2,84 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.bjfu.professionalpractice.mapper.ProjectMapper">
 
+    <resultMap id="projectList" type="cn.edu.bjfu.professionalpractice.entity.Project">
+        <id column="p_id" property="p_id" />
+        <result column="p_name" property="p_name" />
+        <result column="p_numPeople" property="p_numPeople" />
+        <result column="p_content" property="p_content" />
+        <result column="p_instructions" property="p_instructions" />
+        <result column="c_id" property="c_id" />
+
+    </resultMap>
+    <update id="updateProject">
+        update Project
+        <trim prefix="set" suffixOverrides=",">
+            <if test="p_name!=null">p_name = #{p_name},</if>
+            <if test="p_content!=null">p_content = #{p_content},</if>
+            <if test="p_numPeople!=null">p_numPeople = #{p_numPeople},</if>
+            <if test="p_instructions!=null">p_instructions = #{p_instructions},</if>
+            <if test="c_id!=null">c_id = #{c_id},</if>
+        </trim>
+        where p_id = #{p_id}
+    </update>
+
+    <select id="queryProject" resultMap="projectList">
+        <choose>
+            <when test="c_id == null">
+                SELECT * FROM Project
+                <trim prefix="WHERE" prefixOverrides="AND |OR ">
+                    <if test="p_id != null">
+                        <if test="p_id != ''">
+                            p_id = #{p_id}
+                        </if>
+                    </if>
+                    <if test="c_id != ''">
+                        AND Project.c_id IN (SELECT Course.c_id FROM Course WHERE Course.t_id = #{t_id})
+                    </if>
+                    <if test="p_name != null">
+                        AND p_name like #{p_name}
+                    </if>
+                    <if test="p_content != null">
+                        AND p_content like #{p_content}
+                    </if>
+                    <if test="p_numPeople != null">
+                        <if test="p_numPeople != ''">
+                            AND p_numpeople = #{p_numpeople}
+                        </if>
+                    </if>
+                    <if test="c_id != null">
+                        AND c_id = #{c_id}
+                    </if>
+                </trim>
+                ORDER BY p_id
+            </when>
+            <otherwise>
+                SELECT * FROM Project
+                <trim prefix="WHERE" prefixOverrides="AND |OR ">
+                    <if test="p_id != null">
+                        <if test="p_id != ''">
+                            p_id = #{p_id}
+                        </if>
+                    </if>
+                    <if test="p_name != null">
+                        AND p_name like #{p_name}
+                    </if>
+                    <if test="p_content != null">
+                        AND p_content like #{p_content}
+                    </if>
+                    <if test="p_numPeople != null">
+                        <if test="p_numPeople != ''">
+                            AND p_numpeople = #{p_numpeople}
+                        </if>
+                    </if>
+                    <if test="c_id != null">
+                        AND c_id = #{c_id}
+                    </if>
+                </trim>
+                ORDER BY p_id
+            </otherwise>
+        </choose>
+
+    </select>
+
 </mapper>

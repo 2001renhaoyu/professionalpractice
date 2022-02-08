@@ -22,30 +22,30 @@ public class Task implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String tId;
+    private String t_id;
 
-    private String tName;
+    private String t_name;
 
-    private String tContent;
+    private String t_content;
 
-    private String tType;
+    private String t_type;
 
-    private String sId;
+    private String s_id;
 
     @TableField("t_startTime")
-    private LocalDateTime tStarttime;
+    private LocalDateTime t_startTime;
 
-    private String tState;
+    private String t_state;
 
     @TableField("t_endModifyTime")
-    private LocalDateTime tEndmodifytime;
+    private LocalDateTime t_endModifyTime;
 
-    private Float tScore;
+    private Float t_score;
 
-    private String tEvaluation;
+    private String t_evaluation;
 
     @TableField("t_evaluationTime")
-    private LocalDateTime tEvaluationtime;
+    private LocalDateTime t_evaluationTime;
 
 
 }

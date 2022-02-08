@@ -22,23 +22,23 @@ public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String sId;
+    private String s_id;
 
-    private String sName;
+    private String s_name;
 
-    private String sSex;
+    private String s_sex;
 
-    private String sPhone;
+    private String s_phone;
 
-    private String sMajor;
+    private String s_major;
 
     @TableField("s_startTime")
-    private LocalDateTime sStarttime;
+    private LocalDateTime s_startTime;
 
-    private String sClass;
+    private String s_class;
 
     @TableField("s_isDel")
-    private String sIsdel;
+    private String s_isDel;
 
 
 }
